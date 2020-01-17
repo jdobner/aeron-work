@@ -1,2 +1,4 @@
 rootProject.name = 'exp-aeron'
 
+include 'main' , 'main2'
+

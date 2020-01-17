@@ -1,16 +1,36 @@
-plugins {
-    id 'java'
+buildscript {
+    repositories {
+        mavenCentral()
+    }
 }
 
+
+plugins {
+    id 'java'
+    id 'idea'
+    id 'io.freefair.javadoc-links' version '4.1.6' apply false
+    id 'com.github.johnrengelman.shadow' version '5.2.0' apply false
+    id 'biz.aQute.bnd.builder' version '4.3.1' apply false
+    id "com.github.ben-manes.versions" version "0.27.0"
+}
+
+def aeronVersion = '1.24.0'
+
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
 group 'net.jdobner'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
+    implementation "io.aeron:aeron-all:${aeronVersion}"
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
