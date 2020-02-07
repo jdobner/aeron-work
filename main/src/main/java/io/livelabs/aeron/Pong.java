@@ -13,9 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.aeron.samples;
-
-import java.util.concurrent.atomic.AtomicBoolean;
+package io.livelabs.aeron;
 
 import io.aeron.Aeron;
 import io.aeron.FragmentAssembler;
@@ -27,6 +25,8 @@ import org.agrona.DirectBuffer;
 import org.agrona.concurrent.BusySpinIdleStrategy;
 import org.agrona.concurrent.IdleStrategy;
 import org.agrona.concurrent.SigInt;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Pong component of Ping-Pong.
@@ -73,8 +73,8 @@ public class Pong
         SigInt.register(() -> running.set(false));
 
         try (Aeron aeron = Aeron.connect(ctx);
-            Subscription subscription = aeron.addSubscription(PING_CHANNEL, PING_STREAM_ID);
-            Publication publication = EXCLUSIVE_PUBLICATIONS ?
+             Subscription subscription = aeron.addSubscription(PING_CHANNEL, PING_STREAM_ID);
+             Publication publication = EXCLUSIVE_PUBLICATIONS ?
                 aeron.addExclusivePublication(PONG_CHANNEL, PONG_STREAM_ID) :
                 aeron.addPublication(PONG_CHANNEL, PONG_STREAM_ID))
         {
@@ -93,7 +93,7 @@ public class Pong
     }
 
     public static void pingHandler(
-        final Publication pongPublication, final DirectBuffer buffer, final int offset, final int length)
+            final Publication pongPublication, final DirectBuffer buffer, final int offset, final int length)
     {
         if (pongPublication.offer(buffer, offset, length) > 0L)
         {

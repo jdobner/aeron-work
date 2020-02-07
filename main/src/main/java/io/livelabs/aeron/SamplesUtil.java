@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.aeron.samples;
+package io.livelabs.aeron;
 
 import io.aeron.CommonContext;
 import io.aeron.Image;
@@ -54,7 +54,7 @@ public class SamplesUtil
      * @return loop function.
      */
     public static Consumer<Subscription> subscriberLoop(
-        final FragmentHandler fragmentHandler, final int limit, final AtomicBoolean running)
+            final FragmentHandler fragmentHandler, final int limit, final AtomicBoolean running)
     {
         final IdleStrategy idleStrategy = SampleConfiguration.newIdleStrategy();
 

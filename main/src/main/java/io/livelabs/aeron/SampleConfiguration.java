@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.aeron.samples;
+package io.livelabs.aeron;
 
 import org.agrona.concurrent.IdleStrategy;
 
@@ -75,10 +75,12 @@ public class SampleConfiguration
         FRAGMENT_COUNT_LIMIT = Integer.getInteger(FRAME_COUNT_LIMIT_PROP, 10);
         MESSAGE_LENGTH = Integer.getInteger(MESSAGE_LENGTH_PROP, 32);
         RANDOM_MESSAGE_LENGTH = Boolean.getBoolean(RANDOM_MESSAGE_LENGTH_PROP);
-        NUMBER_OF_MESSAGES = Long.getLong(NUMBER_OF_MESSAGES_PROP, 10_000_000);
+        NUMBER_OF_MESSAGES = Long.getLong(NUMBER_OF_MESSAGES_PROP, 10_000);
         WARMUP_NUMBER_OF_MESSAGES = Long.getLong(WARMUP_NUMBER_OF_MESSAGES_PROP, 10_000);
         WARMUP_NUMBER_OF_ITERATIONS = Integer.getInteger(WARMUP_NUMBER_OF_ITERATIONS_PROP, 10);
-        EMBEDDED_MEDIA_DRIVER = Boolean.getBoolean(EMBEDDED_MEDIA_DRIVER_PROP);
+
+        //EMBEDDED_MEDIA_DRIVER = Boolean.getBoolean(EMBEDDED_MEDIA_DRIVER_PROP);
+        EMBEDDED_MEDIA_DRIVER = Boolean.parseBoolean(System.getProperty(EMBEDDED_MEDIA_DRIVER_PROP, "true"));
         INFO_FLAG = Boolean.getBoolean(INFO_FLAG_PROP);
         EXCLUSIVE_PUBLICATIONS = Boolean.getBoolean(EXCLUSIVE_PUBLICATIONS_PROP);
     }

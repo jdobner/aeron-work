@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.aeron.samples;
+package io.livelabs.aeron;
 
 import io.aeron.*;
 import io.aeron.driver.MediaDriver;
-import org.HdrHistogram.Histogram;
 import io.aeron.logbuffer.FragmentHandler;
 import io.aeron.logbuffer.Header;
+import org.HdrHistogram.Histogram;
 import org.agrona.BitUtil;
 import org.agrona.BufferUtil;
 import org.agrona.CloseHelper;
@@ -31,6 +31,8 @@ import org.agrona.console.ContinueBarrier;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+
+import static io.livelabs.aeron.SampleConfiguration.EMBEDDED_MEDIA_DRIVER;
 
 /**
  * Ping component of Ping-Pong latency test recorded to a histogram to capture full distribution..
@@ -47,7 +49,6 @@ public class Ping
     private static final int WARMUP_NUMBER_OF_ITERATIONS = SampleConfiguration.WARMUP_NUMBER_OF_ITERATIONS;
     private static final int MESSAGE_LENGTH = SampleConfiguration.MESSAGE_LENGTH;
     private static final int FRAGMENT_COUNT_LIMIT = SampleConfiguration.FRAGMENT_COUNT_LIMIT;
-    private static final boolean EMBEDDED_MEDIA_DRIVER = SampleConfiguration.EMBEDDED_MEDIA_DRIVER;
     private static final String PING_CHANNEL = SampleConfiguration.PING_CHANNEL;
     private static final String PONG_CHANNEL = SampleConfiguration.PONG_CHANNEL;
     private static final boolean EXCLUSIVE_PUBLICATIONS = SampleConfiguration.EXCLUSIVE_PUBLICATIONS;
@@ -61,8 +62,8 @@ public class Ping
     public static void main(final String[] args) throws Exception
     {
         final MediaDriver driver = EMBEDDED_MEDIA_DRIVER ? MediaDriver.launchEmbedded() : null;
-        final Aeron.Context ctx = new Aeron.Context().availableImageHandler(Ping::availablePongImageHandler);
-        final FragmentHandler fragmentHandler = new FragmentAssembler(Ping::pongHandler);
+        final Aeron.Context ctx = new Aeron.Context().availableImageHandler(io.livelabs.aeron.Ping::availablePongImageHandler);
+        final FragmentHandler fragmentHandler = new FragmentAssembler(io.livelabs.aeron.Ping::pongHandler);
 
         if (EMBEDDED_MEDIA_DRIVER)
         {
@@ -75,8 +76,8 @@ public class Ping
         System.out.println("Using exclusive publications " + EXCLUSIVE_PUBLICATIONS);
 
         try (Aeron aeron = Aeron.connect(ctx);
-            Subscription subscription = aeron.addSubscription(PONG_CHANNEL, PONG_STREAM_ID);
-            Publication publication = EXCLUSIVE_PUBLICATIONS ?
+             Subscription subscription = aeron.addSubscription(PONG_CHANNEL, PONG_STREAM_ID);
+             Publication publication = EXCLUSIVE_PUBLICATIONS ?
                 aeron.addExclusivePublication(PING_CHANNEL, PING_STREAM_ID) :
                 aeron.addPublication(PING_CHANNEL, PING_STREAM_ID))
         {
