@@ -1,17 +1,14 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-}
 
 
 plugins {
     id 'java'
     id 'idea'
-    id 'io.freefair.javadoc-links' version '4.1.6' apply false
     id 'com.github.johnrengelman.shadow' version '5.2.0' apply false
-    id 'biz.aQute.bnd.builder' version '4.3.1' apply false
     id "com.github.ben-manes.versions" version "0.27.0"
+
+    id 'io.freefair.javadoc-links' version '4.1.6' apply false
+    id 'biz.aQute.bnd.builder' version '4.3.1' apply false
+
 }
 
 def aeronVersion = '1.24.0'
@@ -22,15 +19,32 @@ idea {
         downloadSources = true
     }
 }
+
+description "A project to experiment with Aeron"
 group 'net.jdobner'
 version '1.0-SNAPSHOT'
 
+println "Name: $name"
 
 repositories {
     mavenCentral()
+
 }
 
-dependencies {
-    implementation "io.aeron:aeron-all:${aeronVersion}"
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+subprojects {
+
+    apply plugin: 'java'
+
+    dependencies {
+        implementation "io.aeron:aeron-all:${aeronVersion}"
+        implementation 'org.hdrhistogram:HdrHistogram:2.1.12'
+        testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    }
+
+    repositories {
+        mavenCentral()
+    }
 }
+
